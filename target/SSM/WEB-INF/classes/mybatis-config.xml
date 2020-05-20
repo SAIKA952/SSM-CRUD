@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    
+    <typeAliases>
+        <package name="crud.bean"/>
+    </typeAliases>
+
+<!--    plugins标签要放在typeAliases标签后面-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+<!--            分页合理化，如果pageNum > pages，就让他查询最后一页。如果pageNum < 0，就查询第一页-->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+
+
+
+</configuration>
+

@@ -1,0 +1,90 @@
+java.sql.SQLException: The server time zone value '�й���׼ʱ��' is unrecognized or represents more than one time zone. You must configure either the server or JDBC driver (via the 'serverTimezone' configuration property) to use a more specifc time zone value if you want to utilize time zone support.
+
+由于mysql-connection-java版本导致时区问题
+
+解决方法1：
+	在连接数据库的配置文件中url后面加上&serverTimezone=Asia/Shanghai或者&serverTimezone=UTC
+	如果方法1没有用，使用方法2
+解决方法2：
+	登录mysql，输入
+	set global time_zone='+8:00'
+	将市区改为中国时区
+
+
+
+
+
+
+Caused by: org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException: Line 64 in XML document from class path resource [applicationContext.xml] is invalid; nested exception is org.xml.sax.SAXParseException; lineNumber: 64; columnNumber: 30; cvc-complex-type.2.4.c: 通配符的匹配很全面, 但无法找到元素 'tx:advice' 的声明。
+
+问题出在了tx:advice找不到上了
+
+在applicationContext.xml上的xsi:schemaLocation 加上：
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+
+
+
+
+
+
+
+
+java.sql.SQLException: No suitable driver
+
+### Error updating database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLException: Connections could not be acquired from the underlying database!
+### The error may exist in file [D:\学习是不可能学习的\SSM\target\classes\mapper\DepartmentMapper.xml]
+### The error may involve crud.dao.DepartmentMapper.insertSelective
+### The error occurred while executing an update
+### Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLException: Connections could not be acquired from the underlying database!
+连接不上数据库，看看配置文件中是否有少写的或者写错的
+我这里是jdbc.jdbcUrl=jdbc:mysql//localhost:3.........中的jdbc:mysql后面漏了一个:导致错误
+
+
+
+
+
+
+
+java.lang.NoClassDefFoundError: javax/servlet/SessionCookieConfig
+原因：Spring4测试的时候，需要servlet3.0的支持，而我们导入的servlet版本为2.5
+解决方案：
+	将pom.xml中的
+	<dependency>
+          		<groupId>javax.servlet</groupId>
+          		<artifactId>javax.servlet-api</artifactId>
+          		<version>2.5</version>
+          		<scope>provided</scope>
+      	</dependency>
+	换成
+	<dependency>
+          		<groupId>javax.servlet</groupId>
+          		<artifactId>javax.servlet-api</artifactId>
+          		<version>2.5</version>
+          		<scope>provided</scope>
+      	</dependency>
+
+
+
+
+
+
+
+
+org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.AbstractMethodError: Method com/mchange/v2/c3p0/impl/NewProxyResultSet.isClosed()Z is abstract
+原因：c3p0的jar包有问题
+解决方案：
+	将pom.xml中的
+	<dependency>
+	        	<groupId>c3p0</groupId>
+       		<artifactId>c3p0</artifactId>
+        		<version>0.9.1.2</version>
+    	</dependency>
+	换成
+	<dependency>
+      		<groupId>com.mchange</groupId>
+      		<artifactId>c3p0</artifactId>
+      		<version>0.9.5.2</version>
+    	</dependency>
+
+	 
