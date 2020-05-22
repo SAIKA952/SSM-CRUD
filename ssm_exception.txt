@@ -69,8 +69,6 @@ java.lang.NoClassDefFoundError: javax/servlet/SessionCookieConfig
 
 
 
-
-
 org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.AbstractMethodError: Method com/mchange/v2/c3p0/impl/NewProxyResultSet.isClosed()Z is abstract
 原因：c3p0的jar包有问题
 解决方案：
