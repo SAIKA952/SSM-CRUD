@@ -40,7 +40,7 @@ java.sql.SQLException: No suitable driver
 连接不上数据库，看看配置文件中是否有少写的或者写错的
 我这里是jdbc.jdbcUrl=jdbc:mysql//localhost:3.........中的jdbc:mysql后面漏了一个:导致错误
 
-
+ 
 
 
 
