@@ -8,18 +8,18 @@ java.sql.SQLException: The server time zone value '�й���׼ʱ��' is 
 解决方法2：
 	登录mysql，输入
 	set global time_zone='+8:00'
-	将市区改为中国时区
+	将时区改为中国时区
 
 
 
 
-
+ 
 
 Caused by: org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException: Line 64 in XML document from class path resource [applicationContext.xml] is invalid; nested exception is org.xml.sax.SAXParseException; lineNumber: 64; columnNumber: 30; cvc-complex-type.2.4.c: 通配符的匹配很全面, 但无法找到元素 'tx:advice' 的声明。
 
-问题出在了tx:advice找不到上了
+原因是缺少了tx的xsi:schemaLocation约束；
 
-在applicationContext.xml上的xsi:schemaLocation 加上：
+在applicationContext.xml上的xsi:schemaLocation 加上
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx.xsd
 
@@ -60,11 +60,9 @@ java.lang.NoClassDefFoundError: javax/servlet/SessionCookieConfig
 	<dependency>
           		<groupId>javax.servlet</groupId>
           		<artifactId>javax.servlet-api</artifactId>
-          		<version>2.5</version>
+          		<version>4.0.1</version>
           		<scope>provided</scope>
       	</dependency>
-
-
 
 
 
