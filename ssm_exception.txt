@@ -8,7 +8,7 @@ java.sql.SQLException: The server time zone value '�й���׼ʱ��' is 
 解决方法2：
 	登录mysql，输入
 	set global time_zone='+8:00'
-	将市区改为中国时区
+	将时区改为中国时区
 
 
 
