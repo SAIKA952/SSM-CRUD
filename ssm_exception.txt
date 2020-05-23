@@ -13,7 +13,7 @@ java.sql.SQLException: The server time zone value '�й���׼ʱ��' is 
 
 
 
-
+ 
 
 Caused by: org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException: Line 64 in XML document from class path resource [applicationContext.xml] is invalid; nested exception is org.xml.sax.SAXParseException; lineNumber: 64; columnNumber: 30; cvc-complex-type.2.4.c: 通配符的匹配很全面, 但无法找到元素 'tx:advice' 的声明。
 
