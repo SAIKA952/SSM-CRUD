@@ -158,12 +158,23 @@
             </div>
         </div>
 
-        <%--    新增/删除 按钮--%>
         <div class="row">
-            <div class="col-md-4 col-md-offset-8">
+            <%--    查找框     --%>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="输入员工id或员工姓名" id="search_emp">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary glyphicon glyphicon-search" type="button" id="search_btn">Search</button>
+                    </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+
+            <%--    新增/删除 按钮--%>
+            <div class="col-md-4 col-md-offset-4">
                 <button class="btn btn-info" id="emp_add_modal_btn">新增</button>
                 <button class="btn btn-danger" id="emp_delete_batch_btn">删除</button>
             </div>
+
         </div>
 
         <%--    显示表格数据--%>
@@ -291,26 +302,15 @@
                 var emailTd = $("<td></td>").append(item.email);
                 var deptNameTd = $("<td></td>").append(item.department.deptName);
 
-                /**
-                 <button class="btn btn-info btn-sm">
-                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                     编辑
-                 </button>
-                 <button class="btn btn-danger btn-sm">
-                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                     删除
-                 </button>
-
-                 添加编辑/删除按钮
-                 */
+                //编辑按钮
                 var editBtn = $("<button></button>").addClass("btn btn-info btn-sm edit_btn")
-                                                    .append($("<span></span>").addClass("glyphicon glyphicon-pencil").append("编辑"));
+                    .append($("<span></span>").addClass("glyphicon glyphicon-pencil").append("编辑"));
                 //为编辑按钮添加一个自定义的属性，来表示当前员工id
                 editBtn.attr("edit-id", item.empId);
 
-
+                //删除按钮
                 var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
-                                                    .append($("<span></span>").addClass("glyphicon glyphicon-trash").append("删除"));
+                    .append($("<span></span>").addClass("glyphicon glyphicon-trash").append("删除"));
                 //为删除按钮添加一个自定义的属性，来表示当前员工id
                 delBtn.attr("del-id", item.empId);
 
@@ -320,15 +320,15 @@
                 //append方法执行完成以后还是会返回原来的元素，所以可以一直.append添加元素，
                 //将上面的td添加到同一个tr里
                 $("<tr></tr>").append(checkBoxTd)
-                                .append(empIdTd)
-                                .append(empNameTd)
-                                .append(genderTd)
-                                .append(emailTd)
-                                .append(deptNameTd)
-                                .append(btnTd)
-                                .appendTo("#emps_table tbody");//将tr添加到tbody标签中
-
+                    .append(empIdTd)
+                    .append(empNameTd)
+                    .append(genderTd)
+                    .append(emailTd)
+                    .append(deptNameTd)
+                    .append(btnTd)
+                    .appendTo("#emps_table tbody");//将tr添加到tbody标签中
             });
+
         }
 
         // 2、解析并显示分页条
@@ -622,8 +622,6 @@
         })
 
 
-
-
         $("#emp_save_btn").click(function () {
         //1、模态框中填写的表单数据提交给服务器进行保存
         //2、先对要提交给服务器的数据进行校验，并且判断之前的ajax用户名校验是否成功
@@ -852,6 +850,97 @@
             }
 
         });
+
+
+
+//=====================================查询===============================================
+
+
+
+        //为搜索按钮绑定单击事件
+        $("#search_btn").click(function () {
+            //清空tbody，如果不清空，当页面刷新的时候新的数据不会覆盖旧数据，造成页面混乱
+            $("#emps_table tbody").empty();
+
+            //将搜索框中的内容保存到searchContent中
+            var searchContent = $("#search_emp").val();
+
+            console.log(searchContent);
+
+            //如果输入框中的内容为空的话，用to_page回到原本显示的界面。
+            if(searchContent == ""){
+                to_page(1);
+            }else{
+                //如果不为空的话，发送ajax请求
+                $.ajax({
+                    url:"${APP_PATH}/empSearch",
+                    type:"GET",
+                    data:"content=" + searchContent,
+                    success:function (res) {
+
+                        search_emps_table(res);
+                    }
+                });
+            }
+
+
+        })
+
+        // 解析并显示查询到的员工数据
+        function search_emps_table(res) {
+            //清空table表格，如果不清空，当页面刷新的时候新的数据不会覆盖旧数据，造成页面混乱
+            $("#emps_table tbody").empty();
+
+            //将查找出来的员工数据保存在empSearched中
+            var empSearched = res.extend.pageInfo.list;
+
+            //如果empSearch中的数据为空的话，就提示未找到
+            if(empSearched == null){
+                $("<h5></h5>").append("").append("NOT FOUND")
+                    .appendTo("#emps_table tbody");//将tr添加到tbody标签中
+            }else {
+
+                //遍历所有查询到的员工
+                $.each(empSearched, function (i, val) {
+                    //在员工数据的最左边加上多选框
+                    var checkBoxTd = $("<td><input type='checkbox' class='check_item'/></td>");
+
+                    var empIdTd = $("<td></td>").append(empSearched[i].empId);
+                    var empNameTd = $("<td></td>").append(empSearched[i].empName);
+                    var genderTd = $("<td></td>").append(empSearched[i].gender == 'M' ? "男" : "女");
+                    var emailTd = $("<td></td>").append(empSearched[i].email);
+                    var deptNameTd = $("<td></td>").append(empSearched[i].department.deptId);
+
+                    //编辑按钮
+                    var editBtn = $("<button></button>").addClass("btn btn-info btn-sm edit_btn")
+                        .append($("<span></span>").addClass("glyphicon glyphicon-pencil").append("编辑"));
+                    //为编辑按钮添加一个自定义的属性，来表示当前员工id
+                    editBtn.attr("edit-id", empSearched[i].empId);
+
+                    //删除按钮
+                    var delBtn = $("<button></button>").addClass("btn btn-danger btn-sm delete_btn")
+                        .append($("<span></span>").addClass("glyphicon glyphicon-trash").append("删除"));
+                    //为删除按钮添加一个自定义的属性，来表示当前员工id
+                    delBtn.attr("del-id", empSearched[i].empId);
+
+                    //把两个按钮放到一个单元格中，并且按钮之间留点空隙
+                    var btnTd = $("<td></td>").append(editBtn).append(" ").append(delBtn);
+
+                    //append方法执行完成以后还是会返回原来的元素，所以可以一直.append添加元素，
+                    //将上面的td添加到同一个tr里
+                    $("<tr></tr>").append(checkBoxTd)
+                        .append(empIdTd)
+                        .append(empNameTd)
+                        .append(genderTd)
+                        .append(emailTd)
+                        .append(deptNameTd)
+                        .append(btnTd)
+                        .appendTo("#emps_table tbody");//将tr添加到tbody标签中
+                })
+
+            }
+        }
+
 
     </script>
 </body>

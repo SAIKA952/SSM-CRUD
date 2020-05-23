@@ -89,6 +89,16 @@
   </sql>
 
 <!-- ================================================================= -->
+<!--  使用模糊查询，根据姓名查询员工，只要姓名中有包含输入的内容或者id等于输入的内容就都可以被查出来。-->
+  <select id="selectByVague" resultMap="WithDeptResultMap">
+    select
+    <include refid="WithDept_Column_List" />
+    from tbl_emp e left join tbl_dept d
+    on e.`d_id` = d.`dept_id`
+    where emp_name like "%"#{empName,jdbcType=VARCHAR}"%" or emp_id = #{empId,jdbcType=INTEGER}
+  </select>
+
+<!-- ================================================================= -->
 <!--  查询员工时带上部门信息-->
 <!--  List<Employee> selectByExampleWithDept(EmployeeExample example);-->
   <select id="selectByExampleWithDept" resultMap="WithDeptResultMap">
@@ -108,8 +118,9 @@
     </if>
   </select>
 
+<!--  根据id查询员工并且带上部门信息  -->
 <!--  Employee selectByPrimaryKeyWithDept(Integer empId);-->
-  <select id="selectByPrimaryKeyWithDept" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKeyWithDept" resultMap="WithDeptResultMap">
     select
     <include refid="WithDept_Column_List" />
     from tbl_emp e left join tbl_dept d

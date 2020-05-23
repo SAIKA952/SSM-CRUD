@@ -6,6 +6,15 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface EmployeeMapper {
+
+
+    Employee selectByPrimaryKeyWithDept(Integer empId);
+
+    //    模糊查询
+    List<Employee> selectByVague(String empName);
+
+//======================================================================================
+
     long countByExample(EmployeeExample example);
 
     int deleteByExample(EmployeeExample example);
@@ -23,10 +32,6 @@ public interface EmployeeMapper {
 //带部门的员工查询
     List<Employee> selectByExampleWithDept(EmployeeExample example);
 
-    Employee selectByPrimaryKeyWithDept(Integer empId);
-
-
-
     int updateByExampleSelective(@Param("record") Employee record, @Param("example") EmployeeExample example);
 
     int updateByExample(@Param("record") Employee record, @Param("example") EmployeeExample example);
@@ -34,4 +39,6 @@ public interface EmployeeMapper {
     int updateByPrimaryKeySelective(Employee record);
 
     int updateByPrimaryKey(Employee record);
+
+
 }

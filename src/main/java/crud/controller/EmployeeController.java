@@ -2,7 +2,9 @@ package crud.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import crud.bean.DepartmentExample;
 import crud.bean.Employee;
+import crud.bean.EmployeeExample;
 import crud.bean.Msg;
 import crud.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,34 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
+
+
+    /**
+     *  返回json数据
+     * .@ResponseBody要能正常工作，需要导入jackson包
+     */
+    @ResponseBody
+    @RequestMapping("/empSearch")
+    public Msg searchEmpsWithJson2(@RequestParam("content") String content){
+
+//        引入pageHelper分页查询，
+//        在查询之前只需要调用PageHelper.startPage()，传入页码，以及每一页显示的数量
+        PageHelper.startPage(1, 1000000);
+//        分页完之后的查询就是分页查询
+
+//        模糊查询，姓名带有empName或id为
+        List<Employee> list = employeeService.getEmpByVague(content);
+
+        System.out.println(list);
+//        分页查询完之后，可以使用pageInfo来包装查询后的结果，
+//        只需要将pageInfo交给页面就行
+//        pageInfo封装了详细的分页信息，包括我们查询出来的数据
+//        比如总共有多少页，当前是第几页等。。。
+//        想要连续显示5页，就加上参数5即可
+        PageInfo pageInfo = new PageInfo(list,5);
+
+        return Msg.success().add("pageInfo", pageInfo);
+    }
 
 
     /**
@@ -82,8 +112,6 @@ public class EmployeeController {
      *      在web.xml中配置上HttpPutFormContentFilter过滤器
      *      他的作用是将请求体中的数据解析包装成map
      *      request被重新包装，request.getParameter()被重写，就会从自己封装的map中取出数据
-     *
-     *
      *
      * 员工更新方法
      * @param employee
@@ -188,7 +216,7 @@ public class EmployeeController {
 
 //        引入pageHelper分页查询，
 //        在查询之前只需要调用PageHelper.startPage()，传入页码，以及每一页显示的数量
-        PageHelper.startPage(pn,5);
+        PageHelper.startPage(pn,10);
 //        分页完之后的查询就是分页查询
         List<Employee> emps = employeeService.getAll();
 

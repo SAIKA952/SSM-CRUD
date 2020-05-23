@@ -17,6 +17,21 @@ public class EmployeeService {
 
 
     /**
+     * 根据姓名搜索员工
+     */
+    public List<Employee> getEmpByVague(String empName){
+        return employeeMapper.selectByVague(empName);
+    }
+
+
+
+    //    按照员工id查询员工，并且加上部门信息
+    public Employee getEmpWithDept(Integer id) {
+        Employee employee = employeeMapper.selectByPrimaryKeyWithDept(id);
+        return employee;
+    }
+
+    /**
      * 查询所有员工
      * @return
      */
