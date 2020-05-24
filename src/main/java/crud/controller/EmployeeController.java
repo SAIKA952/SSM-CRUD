@@ -33,28 +33,28 @@ public class EmployeeController {
 
 
     /**
-     *  返回json数据
-     * .@ResponseBody要能正常工作，需要导入jackson包
+     *  查询功能
+     *  可以根据搜索框（content）中的内容查询与之有关的员工，包括员工姓名，员工id。
      */
     @ResponseBody
     @RequestMapping("/empSearch")
-    public Msg searchEmpsWithJson2(@RequestParam("content") String content){
+    public Msg searchEmpsByVague(@RequestParam("content") String content){
 
 //        引入pageHelper分页查询，
 //        在查询之前只需要调用PageHelper.startPage()，传入页码，以及每一页显示的数量
         PageHelper.startPage(1, 1000000);
 //        分页完之后的查询就是分页查询
 
-//        模糊查询，姓名带有empName或id为
-        List<Employee> list = employeeService.getEmpByVague(content);
+//        模糊查询，姓名中包含content的或者id为content的都会被搜索出来
+        List<Employee> employees = employeeService.getEmpByVague(content);
 
-        System.out.println(list);
+        System.out.println(employees);
 //        分页查询完之后，可以使用pageInfo来包装查询后的结果，
 //        只需要将pageInfo交给页面就行
 //        pageInfo封装了详细的分页信息，包括我们查询出来的数据
 //        比如总共有多少页，当前是第几页等。。。
 //        想要连续显示5页，就加上参数5即可
-        PageInfo pageInfo = new PageInfo(list,5);
+        PageInfo pageInfo = new PageInfo(employees,5);
 
         return Msg.success().add("pageInfo", pageInfo);
     }

@@ -233,7 +233,6 @@
     <script type="text/javascript">
 <%--        1、页面加载完成以后，直接发送一个ajax请求，获取分页数据--%>
 
-
         <%-- 总记录数，用于跳转到最后一页。
         由于有了分页插件，当跳转页面大于总页面数的时候，就会跳转到最后一页 --%>
         var totalRecordCount;
@@ -244,21 +243,6 @@
         $(function () {
             //去首页
             to_page(1);
-
-            <%--$.ajax({--%>
-            <%--    url:"${APP_PATH}/emps",--%>
-            <%--    data:"pn=1",--%>
-            <%--    type:"GET",--%>
-            <%--    success:function (res) {--%>
-            <%--        // console.log(res);--%>
-            <%--        // 1、解析并显示员工数据--%>
-            <%--        build_emps_table(res);--%>
-            <%--        // 2、解析并显示分页信息--%>
-            <%--        build_page_info(res);--%>
-            <%--        // 3、解析并显示分页条--%>
-            <%--        build_page_nav(res);--%>
-            <%--    }--%>
-            <%--});--%>
 
         });
 
@@ -465,7 +449,6 @@
                     // 点击添加后，最终返回的json字符串是这样的
                     // {"code":100,"msg":"处理成功!",
                     //     "extend":{"depts":[{"deptId":1,"deptName":"开发部"},{"deptId":2,"deptName":"测试部"}]}}
-                    // console.log(res);
 
                     //遍历部门信息，在下拉列表中显示部门信息
                     $.each(res.extend.depts, function () {
@@ -560,29 +543,9 @@
         }
 
 
-        // 通过.blur()，可以在失去焦点的时候来进行校验
-        //=========================================
-        //设置empName和email的校验状态
-        // var empNameStatus;
+
+        //设置email的校验状态
         var emailStatus;
-        //
-        // $("#empName_add_input").blur(function () {
-        //     if(!validate_add_form()){
-        //         //校验失败
-        //         empNameStatus = false;
-        //     }else{
-        //         //成功
-        //         empNameStatus = true;
-        //     }
-        // })
-        // $("#email_add_input").blur(function () {
-        //     if(!validate_add_form()){
-        //         emailStatus = false;
-        //     }else{
-        //         emailStatus = true;
-        //     }
-        // })
-        //=========================================
 
         //校验邮箱是否可用
         $("#email_add_input").change(function () {
@@ -633,12 +596,6 @@
             if(!validate_add_form() || !emailStatus){
                 return false;
             }
-
-        //当姓名与邮箱校验有一个没通过，就无法保存
-        //     if(!empNameStatus || !emailStatus){
-        //         return false;
-        //     }
-
 
 
         //3、校验之后，再发送ajax请求保存员工
@@ -895,7 +852,7 @@
             var empSearched = res.extend.pageInfo.list;
 
             //如果empSearch中的数据为空的话，就提示未找到
-            if(empSearched == null){
+            if(empSearched.length == 0){
                 $("<h5></h5>").append("").append("NOT FOUND")
                     .appendTo("#emps_table tbody");//将tr添加到tbody标签中
             }else {
@@ -909,7 +866,7 @@
                     var empNameTd = $("<td></td>").append(empSearched[i].empName);
                     var genderTd = $("<td></td>").append(empSearched[i].gender == 'M' ? "男" : "女");
                     var emailTd = $("<td></td>").append(empSearched[i].email);
-                    var deptNameTd = $("<td></td>").append(empSearched[i].department.deptId);
+                    var deptNameTd = $("<td></td>").append(empSearched[i].department.deptName);
 
                     //编辑按钮
                     var editBtn = $("<button></button>").addClass("btn btn-info btn-sm edit_btn")
