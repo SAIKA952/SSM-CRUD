@@ -824,6 +824,8 @@
 
             console.log(searchContent);
 
+            $("#page_nav_area").empty();
+
             //如果输入框中的内容为空的话，用to_page回到原本显示的界面。
             if(searchContent == ""){
                 to_page(1);
@@ -836,6 +838,7 @@
                     success:function (res) {
 
                         search_emps_table(res);
+                        build_search_page_info(res)
                     }
                 });
             }
@@ -894,8 +897,18 @@
                         .append(btnTd)
                         .appendTo("#emps_table tbody");//将tr添加到tbody标签中
                 })
-
             }
+        }
+
+        // 解析并显示搜索时的分页文字信息
+        function build_search_page_info(res) {
+            //清空分页文字信息，如果不清空，当页面刷新的时候新的数据不会覆盖旧数据，造成页面混乱
+            $("#page_info_area").empty();
+
+            $("#page_info_area").append("已查询到" + res.extend.pageInfo.total +"条记录。");
+
+            // 赋值总记录数，方便后面调用
+            totalRecordCount = res.extend.pageInfo.total;
         }
 
 
