@@ -28,7 +28,7 @@
 </head>
 <body>
 
-    <!------------------------------ 员工添加的模态框 ------------------------------>
+    <%------------------------------ 员工添加的模态框 ------------------------------%>
     <div class="modal fade" id="empAddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -37,6 +37,7 @@
                     <h4 class="modal-title" id="myModalLabel">新增员工</h4>
                 </div>
                 <div class="modal-body">
+
         <%------------------------------ 表单 ------------------------------%>
 <%--                    empName--%>
                     <form class="form-horizontal">
@@ -77,7 +78,8 @@
                             </div>
                         </div>
                     </form>
-        <%------------------------------ 表单 ------------------------------%>
+        <%----------------------------------------------------------------%>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -86,10 +88,10 @@
             </div>
         </div>
     </div>
-    <!------------------------------ 员工添加的模态框 ------------------------------>
+    <%----------------------------------------------------------------------------%>
 
 
-    <!------------------------------ 员工修改的模态框 ------------------------------>
+    <%------------------------------ 员工修改的模态框 -----------------------------%>
     <div class="modal fade" id="empUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -99,8 +101,8 @@
                 </div>
                 <div class="modal-body">
                     <%------------------------------ 表单 ------------------------------%>
-                    <%--                    empName--%>
                     <form class="form-horizontal">
+                        <%--                        empName--%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">empName</label>
                             <div class="col-sm-10">
@@ -137,7 +139,8 @@
                             </div>
                         </div>
                     </form>
-                    <%------------------------------ 表单 ------------------------------%>
+                    <%------------------------------------------------------------------%>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -146,7 +149,7 @@
             </div>
         </div>
     </div>
-    <!------------------------------ 员工修改的模态框 ------------------------------>
+    <%----------------------------------------------------------------------%>
 
 
     <%--搭建显示页面--%>
@@ -159,15 +162,18 @@
         </div>
 
         <div class="row">
-            <%--    查找框     --%>
+
+            <%--    ------------查找框--------------   --%>
             <div class="col-lg-4">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="输入员工id或员工姓名" id="search_emp">
                     <span class="input-group-btn">
+                        <%-- 查找按钮 --%>
                         <button class="btn btn-primary glyphicon glyphicon-search" type="button" id="search_btn">Search</button>
                     </span>
                 </div><!-- /input-group -->
             </div><!-- /.col-lg-6 -->
+            <%--    -------------------------------   --%>
 
             <%--    新增/删除 按钮--%>
             <div class="col-md-4 col-md-offset-4">
@@ -197,10 +203,7 @@
                         </tr>
                     </thead>
 
-<%--                    员工数据--%>
-                    <tbody>
-
-                    </tbody>
+                    <tbody><%--员工数据放在tbody里--%></tbody>
 
                 </table>
             </div>
@@ -209,16 +212,10 @@
         <%--    显示分页信息--%>
         <div class="row">
             <%--            分页文字信息--%>
-            <div class="col-md-6" id="page_info_area">
-
-            </div>
+            <div class="col-md-6" id="page_info_area"></div>
 
             <%--            分页条信息--%>
-            <div class="col-md-6" id="page_nav_area">
-
-
-
-            </div>
+            <div class="col-md-6" id="page_nav_area"></div>
         </div>
     </div>
 
@@ -837,13 +834,13 @@
                     data:"content=" + searchContent,
                     success:function (res) {
 
+                        //显示搜索到的员工
                         search_emps_table(res);
-                        build_search_page_info(res)
+                        //显示搜索页面的分页信息
+                        build_search_page_info(res);
                     }
                 });
             }
-
-
         })
 
         // 解析并显示查询到的员工数据
@@ -900,15 +897,13 @@
             }
         }
 
-        // 解析并显示搜索时的分页文字信息
+        // 解析并显示搜索页面的分页信息
         function build_search_page_info(res) {
             //清空分页文字信息，如果不清空，当页面刷新的时候新的数据不会覆盖旧数据，造成页面混乱
             $("#page_info_area").empty();
 
             $("#page_info_area").append("已查询到" + res.extend.pageInfo.total +"条记录。");
 
-            // 赋值总记录数，方便后面调用
-            totalRecordCount = res.extend.pageInfo.total;
         }
 
 

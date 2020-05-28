@@ -17,7 +17,7 @@ public class EmployeeService {
 
 
     /**
-     * 根据姓名搜索员工
+     * 根据姓名或id搜索员工
      */
     public List<Employee> getEmpByVague(String empName){
         return employeeMapper.selectByVague(empName);

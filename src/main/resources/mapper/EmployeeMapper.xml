@@ -97,8 +97,8 @@
     on e.`d_id` = d.`dept_id`
     where emp_name like "%"#{empName,jdbcType=VARCHAR}"%" or emp_id = #{empId,jdbcType=INTEGER}
   </select>
-
 <!-- ================================================================= -->
+
 <!--  查询员工时带上部门信息-->
 <!--  List<Employee> selectByExampleWithDept(EmployeeExample example);-->
   <select id="selectByExampleWithDept" resultMap="WithDeptResultMap">
