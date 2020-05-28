@@ -38,9 +38,9 @@
                 </div>
                 <div class="modal-body">
 
-        <%------------------------------ 表单 ------------------------------%>
-<%--                    empName--%>
+                    <%------------------------------ 表单 ------------------------------%>
                     <form class="form-horizontal">
+                        <%-- empName --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">empName</label>
                             <div class="col-sm-10">
@@ -48,7 +48,7 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-<%--                        email--%>
+                        <%-- email --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">email</label>
                             <div class="col-sm-10">
@@ -56,7 +56,7 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-<%--                        gender--%>
+                        <%-- gender --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">gender</label>
                             <div class="col-sm-10">
@@ -69,7 +69,7 @@
                                 </label>
                             </div>
                         </div>
-<%--                        department--%>
+                        <%-- department --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">deptName</label>
                             <div class="col-sm-4">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </form>
-        <%----------------------------------------------------------------%>
+                    <%----------------------------------------------------------------%>
 
                 </div>
                 <div class="modal-footer">
@@ -100,16 +100,17 @@
                     <h4 class="modal-title">员工修改</h4>
                 </div>
                 <div class="modal-body">
+
                     <%------------------------------ 表单 ------------------------------%>
                     <form class="form-horizontal">
-                        <%--                        empName--%>
+                        <%-- empName --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">empName</label>
                             <div class="col-sm-10">
                                 <p class="form-control-static" id="empName_update_static"></p>
                             </div>
                         </div>
-                        <%--                        email--%>
+                        <%-- email --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">email</label>
                             <div class="col-sm-10">
@@ -117,7 +118,7 @@
                                 <span class="help-block"></span>
                             </div>
                         </div>
-                        <%--                        gender--%>
+                        <%-- gender --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">gender</label>
                             <div class="col-sm-10">
@@ -130,7 +131,7 @@
                                 </label>
                             </div>
                         </div>
-                        <%--                        department--%>
+                        <%-- department --%>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">deptName</label>
                             <div class="col-sm-4">
@@ -152,9 +153,9 @@
     <%----------------------------------------------------------------------%>
 
 
-    <%--搭建显示页面--%>
+    <%-- 搭建显示页面 --%>
     <div class="container">
-        <%--    标题--%>
+        <%-- 标题 --%>
         <div class="row">
             <div class="col-md-12">
                 <h1>SSM-CRUD</h1>
@@ -175,7 +176,7 @@
             </div><!-- /.col-lg-6 -->
             <%--    -------------------------------   --%>
 
-            <%--    新增/删除 按钮--%>
+            <%-- 新增/删除 按钮 --%>
             <div class="col-md-4 col-md-offset-4">
                 <button class="btn btn-info" id="emp_add_modal_btn">新增</button>
                 <button class="btn btn-danger" id="emp_delete_batch_btn">删除</button>
@@ -183,11 +184,11 @@
 
         </div>
 
-        <%--    显示表格数据--%>
+        <%-- 显示表格数据 --%>
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover" id="emps_table">
-<%--                    表头--%>
+                    <%-- 表头 --%>
                     <thead>
                         <tr>
                             <th>
@@ -203,27 +204,27 @@
                         </tr>
                     </thead>
 
-                    <tbody><%--员工数据放在tbody里--%></tbody>
+                    <tbody><%-- 员工数据放在tbody里 --%></tbody>
 
                 </table>
             </div>
         </div>
 
-        <%--    显示分页信息--%>
+        <%-- 显示分页信息 --%>
         <div class="row">
-            <%--            分页文字信息--%>
+            <%-- 分页文字信息 --%>
             <div class="col-md-6" id="page_info_area"></div>
 
-            <%--            分页条信息--%>
+            <%-- 分页条信息 --%>
             <div class="col-md-6" id="page_nav_area"></div>
         </div>
     </div>
 
 
 
-<%--  =================================================================================  --%>
-<%--  ==========================================js部分=================================  --%>
-<%--  =================================================================================  --%>
+<%--  =========================================================================================  --%>
+<%--  ==========================================js部分=========================================  --%>
+<%--  =========================================================================================  --%>
 
 
 
@@ -807,9 +808,8 @@
 
 
 
+
 //=====================================查询===============================================
-
-
 
         //为搜索按钮绑定单击事件
         $("#search_btn").click(function () {
